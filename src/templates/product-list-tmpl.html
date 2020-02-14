@@ -1,0 +1,14 @@
+<% productList.forEach(function(product) { %>
+<div class="shop-item">
+  <div class="shop-item-img">
+    <img src="<%-product.imageURL%>" alt="<%-product.name%>">
+  </div>
+  <div class="shop-item-name">
+    <%-product.name%>
+  </div>
+  <div class="shop-item-price">
+    $<%-product.price%>
+  </div>
+  <button class="shop-add-to-cart">Add to cart</button>
+</div>
+<% }); %>
