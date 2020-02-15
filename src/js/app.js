@@ -1,5 +1,5 @@
 'use strict';
-import './app.css';
+import '../app.css';
 import { Product, ProductListComponent } from './product';
 import { basket, BasketList } from './basket';
 

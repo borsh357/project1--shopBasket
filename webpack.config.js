@@ -10,7 +10,7 @@ module.exports = {
   devServer: {
     open: true
   },
-  entry: './src/app.js',
+  entry: './src/js/app.js',
   output: {
     filename: 'app.min.js',
     path: path.resolve(__dirname, 'build')
@@ -54,5 +54,6 @@ module.exports = {
     new CopyPlugin([
       { from: './src/templates', to: 'tmpl' },
     ]),
+
   ],
 }

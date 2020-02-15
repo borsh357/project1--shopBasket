@@ -5,7 +5,7 @@ class BasketList {
     this.basket = basket;
   }
   renderTo(selector) {
-    var tmpl = require('./templates/basket-list-tmpl.html');
+    var tmpl = require('../templates/basket-list-tmpl.html');
     var html = _.template(tmpl)({ basket: this.basket });
     document.querySelector(selector).innerHTML += html;
 
@@ -21,17 +21,18 @@ class BasketList {
         this.basket.decreaseQuantity(key);
       }.bind(this);
     });
-    document.querySelectorAll('.purchase-list_item-delete-link').forEach((deleteItemButton, key) => {
-      deleteItemButton.onclick = function() {
-        this.basket.deleteFromBasket(key);
-      }.bind(this);
-    });
+    document.querySelectorAll('.purchase-list_item-delete-link').forEach(
+      (deleteItemButton, key) => {
+        deleteItemButton.onclick = function() {
+          this.basket.deleteFromBasket(key);
+        }.bind(this);
+      });
     document.querySelector('.shopping-cart_purchase-btn').onclick = function() {
       document.querySelector('.basket').classList.remove('basket--hide');
-    }
+    };
     document.querySelector('.purchase-list_close').onclick = function() {
       document.querySelector('.basket').classList.add('basket--hide');
-    }
+    };
   }
 }
 
@@ -45,7 +46,7 @@ class BasketComponent {
     this.totalValue = 0;
   }
   render() {
-    var tmpl = require('./templates/shopping-cart-tmpl.html');
+    var tmpl = require('../templates/shopping-cart-tmpl.html');
     var html = _.template(tmpl)({ basket: this });
     document.querySelector(this.selector).innerHTML += html;
   }
@@ -53,7 +54,7 @@ class BasketComponent {
     if (this.productsInBasket.includes(product)) {
       this.productsInBasket[this.productsInBasket.indexOf(product)].quantity += 1;
       return;
-    } 
+    }
     this.productsInBasket.push(product);
   }
   deleteFromBasket(product) {

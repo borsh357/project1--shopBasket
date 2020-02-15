@@ -15,7 +15,7 @@ class ProductListComponent {
     this.productList = productList;
   }
   renderTo(selector) {
-    var tmpl = require('./templates/product-list-tmpl.html');
+    var tmpl = require('../templates/product-list-tmpl.html');
     var html = _.template(tmpl)({ productList: this.productList });
     document.querySelector(selector).innerHTML += html;
     document.querySelectorAll('.shop-add-to-cart').forEach((shopButton, key) => {

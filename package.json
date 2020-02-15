@@ -1,18 +1,15 @@
 {
-  "name": "npm-automation-env",
-  "version": "1.0.9",
+  "name": "webpack-dev-env",
+  "version": "1.0.3",
   "description": "",
   "main": "index.js",
-  "watch": {
-    "validate-html": "src/index.html"
-  },
   "validate-css": "src/app.css",
   "jshint": "src/app.js",
   "scripts": {
     "server": "webpack-dev-server",
     "validate-html": "html-validate src/index.html",
     "validate-css": "css-validator src/app.css",
-    "jshint": "jshint src/app.js",
+    "jshint": "jshint src/js/*.js",
     "watch": "webpack watch",
     "dev-mode": "npm-run-all server watch",
     "postinstall": "npm i -g live-server css-validator html-validate jshint",
@@ -33,25 +30,17 @@
     "chai": "^4.2.0",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.2.0",
-    "extract-text-webpack-plugin": "^3.0.2",
-    "file-loader": "^5.0.2",
     "gh-pages": "^2.2.0",
-    "html-loader": "^0.5.5",
-    "html-webpack-exclude-assets-plugin": "0.0.7",
     "mini-css-extract-plugin": "^0.8.0",
     "mocha": "^7.0.1",
     "npm-run-all": "^4.1.5",
-    "npm-watch": "^0.6.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
-    "url-loader": "^3.0.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   },
   "dependencies": {
     "html-webpack-plugin": "^3.2.0",
     "lodash-es": "^4.17.15",
-    "lodash-simple-template-loader": "^1.2.0",
-    "style-loader": "^1.0.1",
-    "webpack-lodash-template-loader": "^1.0.0"
+    "style-loader": "^1.0.1"
   }
 }
