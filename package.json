@@ -17,7 +17,8 @@
     "dev-mode": "npm-run-all server watch",
     "postinstall": "npm i -g live-server css-validator html-validate jshint",
     "build": "webpack -p",
-    "valid-build": "npm-run-all validate-html validate-css jshint build"
+    "valid-build": "npm-run-all validate-html validate-css jshint build",
+    "deploy": "gh-pages -d build"
   },
   "author": "Kalagin Ivan",
   "license": "ISC",
@@ -34,6 +35,7 @@
     "css-loader": "^3.2.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^5.0.2",
+    "gh-pages": "^2.2.0",
     "html-loader": "^0.5.5",
     "html-webpack-exclude-assets-plugin": "0.0.7",
     "mini-css-extract-plugin": "^0.8.0",

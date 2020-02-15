@@ -38,6 +38,7 @@ class BasketList {
 
 class BasketComponent {
   constructor(selector) {
+    this.imageURL = './img/shopping-cart.png';
     this.selector = selector;
     this.productsInBasket = [];
     this.productCount = 0;

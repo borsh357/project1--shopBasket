@@ -32,17 +32,7 @@ module.exports = {
           options: { sourceMap: true }
         }]
       },
-      {
-        test: /\.(png|jp(e*)g|gif)$/,
-        exclude: /node_modules/,
-        use: [{
-          loader: 'url-loader',
-          options: {
-            limit: 10000,
-            publicPath: "/img/"
-          }
-        }]
-      }
+
     ]
   },
 
@@ -61,26 +51,8 @@ module.exports = {
     new CopyPlugin([
       { from: './src/img', to: 'img' },
     ]),
-    new HtmlWebpackPlugin({
-      inject: false,
-      hash: false,
-      template: './src/templates/product-list-tmpl.html',
-      filename: 'templates/product-list.html',
-      path: path.resolve(__dirname, 'build'),
-    }),
-    new HtmlWebpackPlugin({
-      inject: false,
-      hash: false,
-      template: './src/templates/shopping-cart-tmpl.html',
-      filename: 'templates/shopping-cart-tmpl.html',
-      path: path.resolve(__dirname, 'build'),
-    }),
-    new HtmlWebpackPlugin({
-      inject: false,
-      hash: false,
-      template: './src/templates/basket-list-tmpl.html',
-      filename: 'templates/basket-list-tmpl.html',
-      path: path.resolve(__dirname, 'build'),
-    })
+    new CopyPlugin([
+      { from: './src/templates', to: 'tmpl' },
+    ]),
   ],
 }
