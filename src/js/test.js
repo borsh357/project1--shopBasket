@@ -1,18 +1,18 @@
 /* jshint ignore:start */
 const assert = require('assert');
 import { Product, ProductListComponent } from './product';
-import { basket, BasketList, BasketComponent } from './basket';
+import { Basket, BasketListComponent, BasketComponent } from './basket';
 
 describe('Product - creates new product', function() {
   it('product created successfully and has all the params', function() {
-    var product = new Product('image.png', 'product', 'price');
+    const product = new Product('image.png', 'product', 'price');
     assert.deepEqual(product.imageURL, 'image.png');
     assert.deepEqual(product.name, 'product');
     assert.deepEqual(product.price, 'price');
     assert.deepEqual(product.quantity, '1');
   });
   it('product created without params', function() {
-    var product = new Product();
+    const product = new Product();
     assert.deepEqual(product.imageURL, undefined);
     assert.deepEqual(product.name, undefined);
     assert.deepEqual(product.price, undefined);
@@ -22,7 +22,7 @@ describe('Product - creates new product', function() {
 
 describe('ProductListComponent - creates new productListComponent', function() {
   it('ProductListComponent created successfully and has all the products', function() {
-    var productListComponent = new ProductListComponent([
+    const productListComponent = new ProductListComponent([
       new Product('img1', 'name1', 1),
       new Product('img2', 'name2', 2),
       new Product('img3', 'name3', 3),
@@ -39,33 +39,126 @@ describe('ProductListComponent - creates new productListComponent', function() {
     assert.deepEqual(productListComponent.productList[2].price, 3);
   });
   it('ProductListComponent created without productList array', function() {
-    var productListComponent = new ProductListComponent();
+    const productListComponent = new ProductListComponent();
     assert.deepEqual(productListComponent.productList, undefined);
-  });
-  describe('ProductListComponent.renderTo()', function() {
-    it('idk how to test this', function() {});
   });
 });
 
-describe('BasketComponent - creates new basket', function() {
+describe('Basket - creates new basket', function() {
   it('basket created successfully and has all the params', function() {
-    var basket = new BasketComponent('.header');
-    assert.deepEqual(basket.imageURL, './img/shopping-cart.png');
-    assert.deepEqual(basket.selector, '.header');
+    const basket = new Basket();
     assert.deepEqual(basket.productsInBasket, []);
     assert.deepEqual(basket.productCount, 0);
     assert.deepEqual(basket.totalValue, 0);
   });
+});
 
-  describe('basket.addToBasket() - adds product to basket', function() {
-    it('product added to basket', function() {
-      var basket = new BasketComponent('.header');
+describe('Basket.addToBasket(product) - adds product to basket', function() {
+  it('product added to basket', function() {
+    const basket = new Basket();
+    basket.addToBasket(new Product('img', 'name', 100));
+    assert.deepEqual(basket.productsInBasket.length, 1);
+    assert.deepEqual(basket.productsInBasket[0].imageURL, 'img');
+    assert.deepEqual(basket.productsInBasket[0].name, 'name');
+    assert.deepEqual(basket.productsInBasket[0].price, '100');
+  });
+  it('if basket already contains product, it\'s quantity will be changed', function() {
+    const basket = new Basket();
+    const product = new Product('img', 'name', 100);
+    basket.addToBasket(product);
+    basket.addToBasket(product);
+    assert.deepEqual(basket.productsInBasket.length, 1);
+    assert.deepEqual(basket.productsInBasket[0].imageURL, 'img');
+    assert.deepEqual(basket.productsInBasket[0].name, 'name');
+    assert.deepEqual(basket.productsInBasket[0].price, '100');
+    assert.deepEqual(basket.productsInBasket[0].quantity, 2);
+  });
+  it('does not add product if it\'s quantity in basket = 10 (10 is max)', function() {
+    const basket = new Basket();
+    const product = new Product('img', 'name', 100);
+    basket.addToBasket(product);
+    basket.productsInBasket[0].quantity = 10;
+    assert.deepEqual(basket.productsInBasket.length, 1);
+    assert.deepEqual(basket.productsInBasket[0].quantity, 10);
+    basket.addToBasket(product);
+    assert.deepEqual(basket.productsInBasket.length, 1);
+    assert.deepEqual(basket.productsInBasket[0].quantity, 10);
+  });
+});
+
+describe('Basket.deleteFromBasket(product) - removes product from basket', function() {
+  it('product removed from basket', function() {
+    const basket = new Basket();
+    basket.addToBasket(new Product('img', 'name', 100));
+    assert.deepEqual(basket.productsInBasket.length, 1);
+    basket.deleteFromBasket(basket.productsInBasket[0]);
+    assert.deepEqual(basket.productsInBasket.length, 0);
+  });
+});
+
+describe('Basket.increaseQuantity(productIndex) - increases quantity of the product in basket',
+  function() {
+    it('quantity increased', function() {
+      const basket = new Basket();
       basket.addToBasket(new Product('img', 'name', 100));
       assert.deepEqual(basket.productsInBasket.length, 1);
-      assert.deepEqual(basket.productsInBasket[0].imageURL, 'img');
-      assert.deepEqual(basket.productsInBasket[0].name, 'name');
-      assert.deepEqual(basket.productsInBasket[0].price, '100');
+      basket.increaseQuantity(0);
+      assert.deepEqual(basket.productsInBasket.length, 1);
+      assert.deepEqual(basket.productsInBasket[0].quantity, 2);
     });
+    it('method is ignored if quantity of the product = 10 (10 is max)', function() {
+      const basket = new Basket();
+      const product = new Product('img', 'name', 100);
+      basket.addToBasket(product);
+      basket.productsInBasket[0].quantity = 10;
+      assert.deepEqual(basket.productsInBasket.length, 1);
+      assert.deepEqual(basket.productsInBasket[0].quantity, 10);
+      basket.increaseQuantity(0);
+      assert.deepEqual(basket.productsInBasket.length, 1);
+      assert.deepEqual(basket.productsInBasket[0].quantity, 10);
+
+    });
+  });
+
+describe('Basket.decreaseQuantity(productIndex) - decreases quantity of the product in basket',
+  function() {
+    it('quantity decreased', function() {
+      const basket = new Basket();
+      basket.addToBasket(new Product('img', 'name', 100));
+      assert.deepEqual(basket.productsInBasket.length, 1);
+      basket.increaseQuantity(0);
+      assert.deepEqual(basket.productsInBasket[0].quantity, 2);
+      basket.decreaseQuantity(0);
+      assert.deepEqual(basket.productsInBasket.length, 1);
+      assert.deepEqual(basket.productsInBasket[0].quantity, 1);
+    });
+    it('method is ignored if quantity of the product = 1 (1 is min)', function() {
+      const basket = new Basket();
+      const product = new Product('img', 'name', 100);
+      basket.addToBasket(product);
+      assert.deepEqual(basket.productsInBasket.length, 1);
+      assert.deepEqual(basket.productsInBasket[0].quantity, 1);
+      basket.decreaseQuantity(0);
+      assert.deepEqual(basket.productsInBasket.length, 1);
+      assert.deepEqual(basket.productsInBasket[0].quantity, 1);
+
+    });
+  });
+
+describe('BasketComponent - creates basket component which renders itself to selector', function() {
+  it('basket component created and contains basket and selector', function() {
+    const basket = new Basket();
+    const basketComponent = new BasketComponent(basket, '.selector');
+    assert.deepEqual(basketComponent.selector, '.selector');
+    assert.deepEqual(basketComponent.basket, basket);
+  });
+});
+
+describe('BasketListComponent - creates basket list component', function() {
+  it('basket list component created and contains basket', function() {
+    const basket = new Basket();
+    const basketListComponent = new BasketListComponent(basket);
+    assert.deepEqual(basketListComponent.basket, basket);
   });
 });
 

@@ -1,7 +1,7 @@
 'use strict';
 import '../app.css';
 import { Product, ProductListComponent } from './product';
-import { basket, BasketList } from './basket';
+import { basketListComponent, basketComponent } from './basket';
 
 const productList = [
   new Product('./img/xsgold.jpg', 'iPhone Xs Gold', 330),
@@ -16,14 +16,11 @@ const productList = [
   new Product('./img/11black.jpg', 'iPhone 11 Black', 339),
   new Product('./img/7black.jpg', 'iPhone 7 Black', 200),
 ];
+
 const productListComponent = new ProductListComponent(productList);
-const basketList = new BasketList(basket);
 
 window.onload = function() {
   productListComponent.renderTo('.shop');
-  basket.render();
-  basketList.renderTo('.basket');
-
-  if (basket.productCount === 0) document.querySelector('.shopping-cart_items-counter').classList
-    .add('shopping-cart--empty');
+  basketComponent.render();
+  basketListComponent.renderTo('.basket');
 };

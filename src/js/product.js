@@ -22,11 +22,9 @@ class ProductListComponent {
     var tmpl = require('../templates/product-list-tmpl.html');
     var html = _.template(tmpl)({ productList: this.productList });
     document.querySelector(selector).innerHTML += html;
-
     document.querySelectorAll('.shop-add-to-cart').forEach((shopButton, key) => {
       shopButton.onclick = function() {
         basket.addToBasket(this.productList[key]);
-        basket.updateBasket();
       }.bind(this);
     });
   }
