@@ -64,7 +64,7 @@ class BasketComponent {
       document.querySelector('.shopping-cart').remove();
     }
     const tmpl = require('../templates/shopping-cart-tmpl.html');
-    const html = _.template(tmpl)({ basket: this.basket });
+    const html = _.template(tmpl)({ basket: this.basket, imageURL: './img/shopping-cart.png' });
     document.querySelector(this.selector).innerHTML += html;
 
     const counter = document.querySelector('.shopping-cart_items-counter');
@@ -123,9 +123,18 @@ const basket = new Basket();
 const basketComponent = new BasketComponent(basket, '.header');
 const basketListComponent = new BasketListComponent(basket);
 
+/* jshint ignore:start */
 basket.onUpdate = function() {
-  basketComponent.render(); // call update UI
-  basketListComponent.renderTo('.basket'); // call update UI
-}
+  basketComponent.render();
+  basketListComponent.renderTo('.basket');
+};
+/* jshint ignore:end */
 
-export { basket, basketComponent, basketListComponent, Basket, BasketComponent, BasketListComponent };
+export {
+  basket,
+  basketComponent,
+  basketListComponent,
+  Basket,
+  BasketComponent,
+  BasketListComponent
+};

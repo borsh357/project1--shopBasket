@@ -15,6 +15,7 @@ body {
   background: #363636;
   display: flex;
   align-items: center;
+  z-index: 100;
 }
 
 .header-bg {
@@ -68,18 +69,6 @@ a {
   margin: 2%;
 }
 
-@media (hover: hover) {
-  .shop-item:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    border: 1px solid #000;
-    border-radius: 10px;
-  }
-  .shop-item:hover>.shop-add-to-cart {
-    transform: scale(1);
-    transition: transform 0.3s;
-  }
-}
-
 .shop-item-img {
   margin: 0 auto;
 }
@@ -114,6 +103,24 @@ a {
   background: #F13C6E;
 }
 
+@media (hover: hover) {
+  .shop-item:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border: 1px solid #000;
+    border-radius: 10px;
+  }
+  .shop-item:hover>.shop-add-to-cart {
+    transform: scale(1);
+    transition: transform 0.3s;
+  }
+}
+
+@media (hover: none) {
+  .shop-add-to-cart {
+    transform: scale(1);
+  }
+}
+
 .footer {
   color: #fff;
   display: flex;
@@ -134,7 +141,6 @@ a {
   padding: 0 10px;
   margin-top: 10px;
   border-radius: 10px 10px 0 0;
-  z-index: 1000;
 }
 
 .shopping-cart img {
@@ -196,7 +202,10 @@ a {
   color: #000;
   padding-top: 60px;
   overflow-y: scroll;
-  z-index: -1;
+}
+
+.basket:focus>.shop-add-to-cart {
+  display: none;
 }
 
 .basket.basket--hide {
@@ -367,11 +376,5 @@ a {
 @media (max-width:1024px) and (min-width:768px) {
   .shop-item {
     width: 29%;
-  }
-}
-
-@media (hover: none) {
-  .shop-add-to-cart {
-    transform: scale(1);
   }
 }
