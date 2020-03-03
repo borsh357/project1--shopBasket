@@ -11,12 +11,10 @@ describe('Product - creates new product', function() {
     assert.deepEqual(product.price, 'price');
     assert.deepEqual(product.quantity, '1');
   });
-  it('product created without params', function() {
-    const product = new Product();
-    assert.deepEqual(product.imageURL, undefined);
-    assert.deepEqual(product.name, undefined);
-    assert.deepEqual(product.price, undefined);
-    assert.deepEqual(product.quantity, '1');
+  it('product created without props', function() {
+    assert.throws(() => {
+      const product = new Product();
+    });
   });
 });
 
@@ -146,10 +144,9 @@ describe('Basket.decreaseQuantity(productIndex) - decreases quantity of the prod
   });
 
 describe('BasketComponent - creates basket component which renders itself to selector', function() {
-  it('basket component created and contains basket and selector', function() {
+  it('basket component created and contains basket', function() {
     const basket = new Basket();
-    const basketComponent = new BasketComponent(basket, '.selector');
-    assert.deepEqual(basketComponent.selector, '.selector');
+    const basketComponent = new BasketComponent(basket);
     assert.deepEqual(basketComponent.basket, basket);
   });
 });
@@ -161,5 +158,7 @@ describe('BasketListComponent - creates basket list component', function() {
     assert.deepEqual(basketListComponent.basket, basket);
   });
 });
+
+// todo: можно написать тест на onUpdate
 
 /* jshint ignore:end */

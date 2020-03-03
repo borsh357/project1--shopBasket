@@ -15,7 +15,8 @@
     "postinstall": "npm i -g live-server css-validator html-validate jshint",
     "build": "webpack -p",
     "valid-build": "npm-run-all validate-html validate-css jshint test build",
-    "deploy": "gh-pages -d build",
+    "dpl": "gh-pages -d build",
+    "deploy": "npm-run-all valid-build dpl",
     "test": "mocha --require @babel/register src/js/test.js"
   },
   "author": "Kalagin Ivan",

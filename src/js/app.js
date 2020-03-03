@@ -21,6 +21,6 @@ const productListComponent = new ProductListComponent(productList);
 
 window.onload = function() {
   productListComponent.renderTo('.shop');
-  basketComponent.render();
+  basketComponent.renderTo('.header');
   basketListComponent.renderTo('.basket');
 };

@@ -3,11 +3,19 @@ import { basket } from './basket';
 
 class Product {
   constructor(imageURL, name, price) {
+    if (this.validate(imageURL, name, price)) {
+      throw 'Invalid props';
+    }
     this.imageURL = imageURL;
     this.name = name;
     this.price = price;
     this.quantity = 1;
   }
+
+  validate(imageURL, name, price) {
+    return (!imageURL || !name || !price);
+  }
+
   resetQuantity() {
     this.quantity = 1;
   }

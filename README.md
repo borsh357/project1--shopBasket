@@ -37,3 +37,9 @@ npm run valid-build
 ```
 npm run deploy
 ```
+
+## View deployment
+
+```
+https://borsh357.github.io/project1--shopBasket/
+```

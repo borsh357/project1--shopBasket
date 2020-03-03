@@ -54,25 +54,35 @@ class Basket {
 }
 
 class BasketComponent {
-  constructor(basket, selector) {
-    this.selector = selector;
+  constructor(basket) {
     this.basket = basket;
   }
 
-  render() {
-    if (document.querySelector('.shopping-cart')) {
-      document.querySelector('.shopping-cart').remove();
+  renderTo(selector) {
+    if (document.querySelector(selector + ' .shopping-cart')) {
+      document.querySelector(selector + ' .shopping-cart').remove();
     }
     const tmpl = require('../templates/shopping-cart-tmpl.html');
     const html = _.template(tmpl)({ basket: this.basket, imageURL: './img/shopping-cart.png' });
-    document.querySelector(this.selector).innerHTML += html;
+    document.querySelector(selector).innerHTML += html;
 
-    const counter = document.querySelector('.shopping-cart_items-counter');
+    const counters = document.querySelectorAll('.shopping-cart_items-counter');
     if (this.basket.productCount > 0) {
-      counter.classList.remove('shopping-cart--empty');
+      counters.forEach(counter => {
+        counter.classList.remove('shopping-cart--empty');
+        return;
+      });
     } else {
-      counter.classList.add('shopping-cart--empty');
+      counters.forEach(counter => {
+        counter.classList.add('shopping-cart--empty');
+        return;
+      });
     }
+    document.querySelectorAll('.shopping-cart_purchase-btn').forEach(btn => {
+      btn.onclick = function() {
+        document.querySelector('.basket').classList.remove('basket--hide');
+      };
+    });
   }
 }
 
@@ -109,10 +119,6 @@ class BasketListComponent {
         }.bind(this);
       });
 
-    document.querySelector('.shopping-cart_purchase-btn').onclick = function() {
-      document.querySelector('.basket').classList.remove('basket--hide');
-    };
-
     document.querySelector('.purchase-list_close').onclick = function() {
       document.querySelector('.basket').classList.add('basket--hide');
     };
@@ -120,12 +126,13 @@ class BasketListComponent {
 }
 
 const basket = new Basket();
-const basketComponent = new BasketComponent(basket, '.header');
+const basketComponent = new BasketComponent(basket);
+
 const basketListComponent = new BasketListComponent(basket);
 
 /* jshint ignore:start */
 basket.onUpdate = function() {
-  basketComponent.render();
+  basketComponent.renderTo('.header');
   basketListComponent.renderTo('.basket');
 };
 /* jshint ignore:end */
